@@ -144,9 +144,10 @@
             but thank you so much for being the best friend everyone deserves. Thank you for always trying for me despite 
             my shortcomings.</p>
             <button class="tbh-envelope">Willy</button>
-            <p class="tbh-message">Thank you for always being by side and tolerating me. I don't think i deserve you, 
-            but thank you so much for being the best friend everyone deserves. Thank you for always trying for me despite 
-            my shortcomings.</p>
+            <p class="tbh-message">happy birthday my dearest soul sister!!!
+            Nothing can replace the times and memories we have built. our friendship is a treasure that i hold dear 
+            and i am truly blessed to have you in my life. wish you all the love, joy and success in life. ilysm 
+            chachi 🫂💕.</p>
             <!-- Add more messages as needed -->
         </div>
     </div>
@@ -185,46 +186,55 @@ function saveWish() {
   });
   wishInput.value = '';
 }
-        function appendWish(wish, index) {
-            var wishesDiv = document.getElementById('wishes');
-            var wishDiv = document.createElement('div');
-            wishDiv.classList.add('wish');
-            wishDiv.textContent = wish;
-            
-            var deleteButton = document.createElement('button');
-            deleteButton.classList.add('delete-button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = function() {
-                deleteWish(index);
-            };
+function appendWish(wish, key) {
+    var wishesDiv = document.getElementById('wishes');
+    var wishDiv = document.createElement('div');
+    wishDiv.classList.add('wish');
+    wishDiv.textContent = wish;
 
-            wishDiv.appendChild(deleteButton);
-            wishesDiv.appendChild(wishDiv);
-        }
+    var deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.onclick = function() {
+        deleteWish(key);
+    };
 
-        function deleteWish(index) {
+    wishDiv.appendChild(deleteButton);
+    wishesDiv.appendChild(wishDiv);
+}
+
+function deleteWish(key) {
+    // Here you can keep your prompt for the secret code
     var secretCode = "duffer"; 
-    var userCode = prompt("Beghairton only chachi has access you can't delete now lol: ");
+    var userCode = prompt("Enter the secret code to delete:");
 
-    if(userCode === secretCode) {
-        var wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-        wishes.splice(index, 1);
-        localStorage.setItem('wishes', JSON.stringify(wishes));
-        loadWishes();
+    if (userCode === secretCode) {
+        database.ref('wishes/' + key).remove()
+        .then(function() {
+            console.log("Wish successfully deleted");
+            // Optionally, you can reload wishes here or display a success message
+        })
+        .catch(function(error) {
+            console.log("Error deleting wish: ", error);
+            // Optionally, display an error message
+        });
     } else {
-        alert("Ae shurli de kam check karo, too late now you can't delete");
+        alert("Incorrect secret code. Cannot delete the wish.");
     }
 }
+
 function loadWishes() {
-  var wishesDiv = document.getElementById('wishes');
-  database.ref('wishes/').on('value', function(snapshot) {
-    wishesDiv.innerHTML = ''; // Clear existing wishes
-    snapshot.forEach(function(childSnapshot) {
-      var wish = childSnapshot.val().wish;
-      appendWish(wish);
+    var wishesDiv = document.getElementById('wishes');
+    database.ref('wishes/').on('value', function(snapshot) {
+        wishesDiv.innerHTML = ''; // Clear existing wishes
+        snapshot.forEach(function(childSnapshot) {
+            var wish = childSnapshot.val().wish;
+            var key = childSnapshot.key;
+            appendWish(wish, key);
+        });
     });
-  });
 }
+
 document.addEventListener('DOMContentLoaded', loadWishes);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
@@ -261,8 +271,6 @@ document.addEventListener('DOMContentLoaded', loadWishes);
       firebase.initializeApp(firebaseConfig);
       var database = firebase.database();
     </script>
-</body>
-</html>
 
 
 
