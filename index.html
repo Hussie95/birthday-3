@@ -206,7 +206,7 @@ function appendWish(wish, key) {
 function deleteWish(key) {
     // Here you can keep your prompt for the secret code
     var secretCode = "duffer"; 
-    var userCode = prompt("Enter the secret code to delete:");
+    var userCode = prompt("Beghairton only chachi has access you can't delete now lol:");
 
     if (userCode === secretCode) {
         database.ref('wishes/' + key).remove()
@@ -215,7 +215,7 @@ function deleteWish(key) {
             // Optionally, you can reload wishes here or display a success message
         })
         .catch(function(error) {
-            console.log("Error deleting wish: ", error);
+            console.log("Ae shurli de kam check karo, too late now you can't delete ", error);
             // Optionally, display an error message
         });
     } else {
