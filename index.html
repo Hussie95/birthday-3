@@ -195,7 +195,7 @@
 
         function deleteWish(index) {
     var secretCode = "duffer"; 
-    var userCode = prompt("Enter password:");
+    var userCode = prompt("Beghairton only chachi has access you can't delete now lol: ");
 
     if(userCode === secretCode) {
         var wishes = JSON.parse(localStorage.getItem('wishes')) || [];
@@ -203,7 +203,7 @@
         localStorage.setItem('wishes', JSON.stringify(wishes));
         loadWishes();
     } else {
-        alert("Incorrect secret code!");
+        alert("Ae shurli de kam check karo");
     }
 }
         function loadWishes() {
