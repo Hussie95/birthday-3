@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bestie's Birthday</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -138,8 +141,8 @@
                 never thought i be praising her but i'm at gun point so</p>
             <button class="tbh-envelope">fatima</button>
             <p class="tbh-message">Thank you for always being by side and tolerating me. I don't think i deserve you, 
-                but thank you so much for being the best friend everyone deserves. Thank you for always trying for me despite 
-                my shortcomings.</p>
+            but thank you so much for being the best friend everyone deserves. Thank you for always trying for me despite 
+            my shortcomings.</p>
             <button class="tbh-envelope">Willy</button>
             <p class="tbh-message">Thank you for always being by side and tolerating me. I don't think i deserve you, 
             but thank you so much for being the best friend everyone deserves. Thank you for always trying for me despite 
@@ -174,16 +177,14 @@
 
         // Virtual Wish Jar 
         document.addEventListener('DOMContentLoaded', loadWishes);
-
-        function saveWish() {
-            var wishInput = document.getElementById('wish-input');
-            var wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-            wishes.push(wishInput.value);
-            localStorage.setItem('wishes', JSON.stringify(wishes));
-            appendWish(wishInput.value, wishes.length - 1);
-            wishInput.value = '';
-        }
-
+// Save wish to Firebase
+function saveWish() {
+  var wishInput = document.getElementById('wish-input');
+  database.ref('wishes/').push({
+    wish: wishInput.value
+  });
+  wishInput.value = '';
+}
         function appendWish(wish, index) {
             var wishesDiv = document.getElementById('wishes');
             var wishDiv = document.createElement('div');
@@ -214,12 +215,17 @@
         alert("Ae shurli de kam check karo, too late now you can't delete");
     }
 }
-        function loadWishes() {
-            var wishesDiv = document.getElementById('wishes');
-            wishesDiv.innerHTML = ''; // Clear existing wishes
-            var wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-            wishes.forEach((wish, index) => appendWish(wish, index));
-        }
+function loadWishes() {
+  var wishesDiv = document.getElementById('wishes');
+  database.ref('wishes/').on('value', function(snapshot) {
+    wishesDiv.innerHTML = ''; // Clear existing wishes
+    snapshot.forEach(function(childSnapshot) {
+      var wish = childSnapshot.val().wish;
+      appendWish(wish);
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded', loadWishes);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
@@ -247,7 +253,14 @@
             }());
         };
     </script>
-    
+    <script> var firebaseConfig = {
+        databaseURL: "https://birthday-73b01-default-rtdb.firebaseio.com/",
+        // ... other configuration details
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      var database = firebase.database();
+    </script>
 </body>
 </html>
 
