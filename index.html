@@ -21,47 +21,67 @@
             color: white;
         }
 
-        .pinterest-board {
+        h2 {
+            color: #FF69B4; /* Hot Pink Titles */
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .pinterest-board, .birthday-cards {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             padding: 20px;
         }
 
-        .pinterest-board img {
-            width: 90%;
+        .pinterest-board img, .birthday-cards img {
+            width: 45%; /* Adjusted image size */
             margin: 10px;
-            border-radius: 10px;
+            border: 3px solid #FADADD; /* Pale Pink Border */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             transition: transform 0.3s ease-in-out;
         }
 
-        .pinterest-board img:hover {
+        .pinterest-board img:hover, .birthday-cards img:hover {
             transform: scale(1.05);
         }
 
         #tbh-card {
             display: none;
-            margin: 20px;
+            margin: 20px auto;
             padding: 20px;
+            width: 80%;
+            max-width: 600px;
             background-color: #FADADD; /* Pale Pink Card */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
             transition: all 0.3s ease-in-out;
         }
 
+        #tbh-message {
+            text-align: left;
+            line-height: 1.6;
+        }
+
         #tbh-button {
-            background-color: #FF69B4; /* Light Pink Button */
+            background-color: #FF69B4; /* Hot Pink Button */
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
         }
 
         #tbh-button:hover {
             background-color: #D8C3A5;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -70,10 +90,10 @@
         <h1>Happy Birthday, Bestie!</h1>
     </header>
 
-    <div class="pinterest-board">
-        <h2>Pinterest Board, PC - Willy</h2>
-        <!-- Add more images as needed -->
+    <div class="section pinterest-board">
+        <h2>Pinterest Board, PC - Willy (my idea hehe)</h2>
         <img src="WhatsApp Image 2024-01-06 at 11.42.28 PM.jpeg" alt="Image 4">
+        <!-- Add more images as needed -->
     </div>
 
     <button id="tbh-button">click for tbh</button>
@@ -95,6 +115,14 @@
         </div>
     </div>
 
+    <div class="section birthday-cards">
+        <h2>Birthday Cards for chachi</h2>
+        <img src="WhatsApp Image 2024-01-10 at 6.55.01 PM (1).jpeg" alt="Birthday Card 1">
+        <img src="WhatsApp Image 2024-01-10 at 6.55.01 PM (2).jpeg" alt="Birthday Card 2">
+        <img src="WhatsApp Image 2024-01-10 at 6.55.01 PM.jpeg" alt="Birthday Card 3">
+        <!-- Add more cards as needed -->
+    </div>
+
     <script>
         document.getElementById("tbh-button").addEventListener("click", function () {
             var tbhCard = document.getElementById("tbh-card");
@@ -103,7 +131,6 @@
     </script>
 </body>
 </html>
-
 
 
 
