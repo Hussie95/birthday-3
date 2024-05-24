@@ -7,23 +7,21 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
-
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #FFD1DC; /* Light Pink Background */
+            background-color: #FFD1DC;
             color: #333;
             text-align: center;
         }
 
         header {
-            background-color: #FF69B4; /* Hot Pink Header */
+            background-color: #FF69B4;
             padding: 20px;
             color: white;
         }
-
         .pinterest-board {
             display: flex;
             flex-wrap: wrap;
@@ -42,18 +40,37 @@
             transform: scale(1.05);
         }
 
+      /*  .pinterest-board {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .pinterest-board img {
+            width: 90%;
+            max-width: 200px;
+            margin: 10px;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .pinterest-board img:hover {
+            transform: scale(1.05);
+        } */
+
         #tbh-card, .tbh-message {
             display: none;
             margin: 20px;
             padding: 20px;
-            background-color: #FADADD; /* Pale Pink Card */
+            background-color: #FADADD;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             transition: all 0.3s ease-in-out;
         }
 
         #tbh-button, .tbh-envelope, #save-button {
-            background-color: #FF69B4; /* Light Pink Button */
+            background-color: #FF69B4;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -69,7 +86,7 @@
 
         #wish-jar-container {
             margin: 20px;
-            background-color: #FADADD; /* Pale Pink Jar Background */
+            background-color: #FADADD;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -95,7 +112,7 @@
         }
 
         .delete-button {
-            background-color: #FF0000; /* Red color for delete button */
+            background-color: #FF0000;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -104,7 +121,127 @@
         }
 
         .delete-button:hover {
-            background-color: #CC0000; /* Darker red on hover */
+            background-color: #CC0000;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            margin: 50px auto;
+            padding: 40px 0;
+            background-color: #FFF5F7;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 10px;
+        }
+        .timeline h2 {
+          text-align: right;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #FF69B4;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 20px 40px;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            transform: translateX(-50%);
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            transform: translateX(50%);
+            text-align: left;
+        }
+
+        .timeline-item-content {
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .timeline-item-content h2 {
+            margin: 0;
+            color: #FF69B4;
+        }
+
+        .timeline-item-content p {
+            margin: 10px 0 0;
+            color: #666;
+        }
+
+        .timeline-item-content img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #FF69B4;
+            border: 4px solid #FFF;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                transform: translateX(0) !important;
+                text-align: left !important;
+                padding-left: 50px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(odd)::after, .timeline-item:nth-child(even)::after {
+                left: -10px !important;
+            }
+            /* Add this CSS */
+
+            .timeline-item.completed .timeline-item-content {
+    background-color: #eeb1d0; /* Change the background color to green */
+}
+
+            .timeline::before {
+                left: 20px;
+                transform: none;
+            }
         }
     </style>
 </head>
@@ -114,8 +251,7 @@
     </header>
 
     <div class="pinterest-board">
-        <h2>Pinterest Board, PC - Willy (she just helped me find pics but anyways) </h2>
-        <!-- Add more images as needed -->
+        <h2>Pinterest Board, PC - Willy (she just helped me find pics but anyways)</h2>
         <img src="WhatsApp Image 2024-01-06 at 11.42.28 PM.jpeg" alt="Image 4">
     </div>
 
@@ -124,43 +260,85 @@
     <div id="tbh-card">
         <div id="tbh-messages">
             <button class="tbh-envelope">Daud</button>
-            <p class="tbh-message">chachi tbh is the best person in my life. i can trust her with everything she’s the only person i talk to 
-                everyday and i love talking to her. she’s so cute and beautiful but still she’s insecure sometimes that’s 
+            <p class="tbh-message">chachi tbh is the best person in my life. i can trust her with everything she’s the only person i talk to
+                everyday and i love talking to her. she’s so cute and beautiful but still she’s insecure sometimes that’s
                 the only bad thing about her baki she’s perfect and i love her</p>
 
             <button class="tbh-envelope">Husnain</button>
-            <p class="tbh-message">chachi is my first and best friend on twitter, she's my closest friend and no one understands me as well as 
-                she does, she knows everything about me from the things that make me happy to the ones that make me sad, she's 
-                the best person ever and i love her sm, she's always there for everyone even when she's not doing well herself, 
-                she's the most selfless person I know, she always goes above and beyond for her loved ones and would do anything 
-                to make them happy and feel better at times when they're not doing well, I trust her the most, 
+            <p class="tbh-message">chachi is my first and best friend on twitter, she's my closest friend and no one understands me as well as
+                she does, she knows everything about me from the things that make me happy to the ones that make me sad, she's
+                the best person ever and i love her sm, she's always there for everyone even when she's not doing well herself,
+                she's the most selfless person I know, she always goes above and beyond for her loved ones and would do anything
+                to make them happy and feel better at times when they're not doing well, I trust her the most,
                 she has the best heart and she's an absolutely amazing person</p>
+
             <button class="tbh-envelope">Ahmed</button>
             <p class="tbh-message">chachi probably is one of the closest friends of mine, she's so rude in gcs but she's so kind with
                 me in dms, she always takes care of me asks me if i'm okay, i love this about her, she's so humble and nice,
                 never thought i be praising her but i'm at gun point so</p>
+
             <button class="tbh-envelope">Fatima</button>
-            <p class="tbh-message">Thank you for always being by side and tolerating me. I don't think i deserve you, 
-            but thank you so much for being the best friend everyone deserves. Thank you for always trying for me despite 
+            <p class="tbh-message">Thank you for always being by side and tolerating me. I don't think i deserve you,
+            but thank you so much for being the best friend everyone deserves. Thank you for always trying for me despite
             my shortcomings.</p>
+
             <button class="tbh-envelope">Willy</button>
             <p class="tbh-message">happy birthday my dearest soul sister!!!
-            Nothing can replace the times and memories we have built. our friendship is a treasure that i hold dear 
-            and i am truly blessed to have you in my life. wish you all the love, joy and success in life. ilysm 
+            Nothing can replace the times and memories we have built. our friendship is a treasure that i hold dear
+            and i am truly blessed to have you in my life. wish you all the love, joy and success in life. ilysm
             chachi 🫂💕.</p>
-            <!-- Add more messages as needed -->
         </div>
     </div>
 
-    <!-- Virtual Wish Jar -->
     <div id="wish-jar-container">
-        <h2>Leave a Wish or a message (be nice) for chachi!!! (you better) </h2>
+        <h2>Leave a Wish or a message (be nice) for chachi!!! (you better)</h2>
         <textarea id="wish-input" placeholder="Write your wish here..."></textarea>
         <button id="save-button" onclick="saveWish()">Send Wish</button>
         <div id="wishes">
             <!-- Wishes will appear here -->
         </div>
     </div>
+
+    <div class="timeline">
+        <h2>You've got this</h2>
+        <div class="timeline-item completed"> <!-- Year 1 -->
+            <div class="timeline-item-content">
+                <h2>Year 1</h2>
+                <img src="/birthday/OIP.jpg" alt="Year 1 Done">
+                <p>Congratulations on finishing your first year! One down, four to go. Keep pushing, you're doing amazing!</p>
+            </div>
+        </div>
+        <div class="timeline-item in-progress year2"> <!-- Year 2 -->
+            <div class="timeline-item-content">
+                <h2>Year 2</h2>
+                <img src="https://img.icons8.com/emoji/48/000000/books-emoji.png" alt="Year 2">
+                <p>Keep up the great work. You're halfway to becoming a doctor. So proud of you!</p>
+            </div>
+        </div>
+        <div class="timeline-item in-progress year3"> <!-- Year 3 -->
+            <div class="timeline-item-content">
+                <h2>Year 3</h2>
+                <img src="/R (1).png" alt="Year 3">
+                <p>Just two more years to go. You've come so far, keep pushing!</p>
+            </div>
+        </div>
+        <div class="timeline-item in-progress year4"> <!-- Year 4 -->
+            <div class="timeline-item-content">
+                <h2>Year 4</h2>
+                <img src="https://img.icons8.com/emoji/48/000000/graduation-cap-emoji.png" alt="Graduation">
+                <p>It's your penultimate year! The finish line is getting closer. Keep striving for excellence!</p>
+            </div>
+        </div>
+        <div class="timeline-item in-progress year5"> <!-- Year 5 -->
+            <div class="timeline-item-content">
+                <h2>Year 5</h2>
+                <img src="https://img.icons8.com/emoji/48/000000/graduation-cap-emoji.png" alt="Year 5">
+                <p>Congratulations on reaching your final year! You're almost there. Keep pushing towards your dreams!</p>
+            </div>
+        </div>
+    </div>
+    
+  
 
     <script>
         document.getElementById("tbh-button").addEventListener("click", function() {
@@ -176,73 +354,91 @@
             });
         }
 
-        // Virtual Wish Jar 
+        // Virtual Wish Jar
         document.addEventListener('DOMContentLoaded', loadWishes);
-// Save wish to Firebase
-function saveWish() {
-  var wishInput = document.getElementById('wish-input');
-  database.ref('wishes/').push({
-    wish: wishInput.value
-  });
-  wishInput.value = '';
-}
-function appendWish(wish, key) {
-    var wishesDiv = document.getElementById('wishes');
-    var wishDiv = document.createElement('div');
-    wishDiv.classList.add('wish');
-    wishDiv.textContent = wish;
 
-    var deleteButton = document.createElement('button');
-    deleteButton.classList.add('delete-button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.onclick = function() {
-        deleteWish(key);
-    };
+        function saveWish() {
+            var wishInput = document.getElementById('wish-input');
+            database.ref('wishes/').push({
+                wish: wishInput.value
+            });
+            wishInput.value = '';
+        }
 
-    wishDiv.appendChild(deleteButton);
-    wishesDiv.appendChild(wishDiv);
-}
+        function appendWish(wish, key) {
+            var wishesDiv = document.getElementById('wishes');
+            var wishDiv = document.createElement('div');
+            wishDiv.classList.add('wish');
+            wishDiv.textContent = wish;
 
-function deleteWish(key) {
-    // Here you can keep your prompt for the secret code
-    var secretCode = "duffer"; 
-    var userCode = prompt("Beghairton only chachi has access you can't delete now lol:");
+            var deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                deleteWish(key);
+            };
 
-    if (userCode === secretCode) {
-        database.ref('wishes/' + key).remove()
-        .then(function() {
-            console.log("Wish successfully deleted");
-            // Optionally, you can reload wishes here or display a success message
-        })
-        .catch(function(error) {
-            console.log("Ae shurli de kam check karo, too late now you can't delete ", error);
-            // Optionally, display an error message
+            wishDiv.appendChild(deleteButton);
+            wishesDiv.appendChild(wishDiv);
+        }
+
+        function deleteWish(key) {
+            var secretCode = "duffer";
+            var userCode = prompt("Beghairton only chachi has access you can't delete now lol:");
+
+            if (userCode === secretCode) {
+                database.ref('wishes/' + key).remove()
+                .then(function() {
+                    console.log("Wish successfully deleted");
+                })
+                .catch(function(error) {
+                    console.log("Ae shurli de kam check karo, too late now you can't delete ", error);
+                });
+            } else {
+                alert("Ae shurli de kam check karo, too late now you can't delete.");
+            }
+        }
+
+        function loadWishes() {
+            var wishesDiv = document.getElementById('wishes');
+            database.ref('wishes/').on('value', function(snapshot) {
+                wishesDiv.innerHTML = ''; // Clear existing wishes
+                snapshot.forEach(function(childSnapshot) {
+                    var wish = childSnapshot.val().wish;
+                    var key = childSnapshot.key;
+                    appendWish(wish, key);
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+    var items = document.querySelectorAll(".timeline-item");
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+                if (entry.target.classList.contains("completed")) {
+                    entry.target.querySelector('.timeline-item-content').style.backgroundColor = "#FADADD";
+                }
+                observer.unobserve(entry.target);
+            }
         });
-    } else {
-        alert("Ae shurli de kam check karo, too late now you can't delete.");
-    }
-}
+    }, { threshold: 0.8 });
 
-function loadWishes() {
-    var wishesDiv = document.getElementById('wishes');
-    database.ref('wishes/').on('value', function(snapshot) {
-        wishesDiv.innerHTML = ''; // Clear existing wishes
-        snapshot.forEach(function(childSnapshot) {
-            var wish = childSnapshot.val().wish;
-            var key = childSnapshot.key;
-            appendWish(wish, key);
-        });
+    items.forEach(function(item) {
+        observer.observe(item);
     });
-}
+});
 
-document.addEventListener('DOMContentLoaded', loadWishes);
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
         window.onload = function() {
             var duration = 7 * 1000;
             var end = Date.now() + duration;
-    
+
             (function frame() {
                 confetti({
                     particleCount: 7,
@@ -256,21 +452,23 @@ document.addEventListener('DOMContentLoaded', loadWishes);
                     spread: 55,
                     origin: { x: 1 }
                 });
-    
+
                 if (Date.now() < end) {
                     requestAnimationFrame(frame);
                 }
             }());
         };
     </script>
-    <script> var firebaseConfig = {
-        databaseURL: "https://birthday-73b01-default-rtdb.firebaseio.com/",
-        // ... other configuration details
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      var database = firebase.database();
+
+    <script>
+        var firebaseConfig = {
+            databaseURL: "https://birthday-73b01-default-rtdb.firebaseio.com/",
+        };
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
     </script>
+</body>
+</html>
 
 
 
