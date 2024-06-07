@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
 
     <style>
         body {
@@ -176,73 +177,87 @@
             });
         }
 
-        // Virtual Wish Jar 
+        // Initialize Firebase
+        var firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "https://birthday-73b01-default-rtdb.firebaseio.com/",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        var database = firebase.database();
+        var auth = firebase.auth();
+
+        // Sign in anonymously
+        auth.signInAnonymously().catch(function(error) {
+            console.error('Anonymous sign-in error', error);
+        });
+
+        // Save wish to Firebase
+        function saveWish() {
+            var wishInput = document.getElementById('wish-input');
+            database.ref('wishes/').push({
+                wish: wishInput.value
+            });
+            wishInput.value = '';
+        }
+
+        function appendWish(wish, key) {
+            var wishesDiv = document.getElementById('wishes');
+            var wishDiv = document.createElement('div');
+            wishDiv.classList.add('wish');
+            wishDiv.textContent = wish;
+
+            var deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                deleteWish(key);
+            };
+
+            wishDiv.appendChild(deleteButton);
+            wishesDiv.appendChild(wishDiv);
+        }
+
+        function deleteWish(key) {
+            var secretCode = "duffer";
+            var userCode = prompt("Beghairton only chachi has access you can't delete now lol:");
+
+            if (userCode === secretCode) {
+                database.ref('wishes/' + key).remove()
+                    .then(function() {
+                        console.log("Wish successfully deleted");
+                    })
+                    .catch(function(error) {
+                        console.log("Ae shurli de kam check karo, too late now you can't delete ", error);
+                    });
+            } else {
+                alert("Ae shurli de kam check karo, too late now you can't delete.");
+            }
+        }
+
+        function loadWishes() {
+            var wishesDiv = document.getElementById('wishes');
+            database.ref('wishes/').on('value', function(snapshot) {
+                wishesDiv.innerHTML = '';
+                snapshot.forEach(function(childSnapshot) {
+                    var wish = childSnapshot.val().wish;
+                    var key = childSnapshot.key;
+                    appendWish(wish, key);
+                });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', loadWishes);
-// Save wish to Firebase
-function saveWish() {
-  var wishInput = document.getElementById('wish-input');
-  database.ref('wishes/').push({
-    wish: wishInput.value
-  });
-  wishInput.value = '';
-}
-function appendWish(wish, key) {
-    var wishesDiv = document.getElementById('wishes');
-    var wishDiv = document.createElement('div');
-    wishDiv.classList.add('wish');
-    wishDiv.textContent = wish;
 
-    var deleteButton = document.createElement('button');
-    deleteButton.classList.add('delete-button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.onclick = function() {
-        deleteWish(key);
-    };
-
-    wishDiv.appendChild(deleteButton);
-    wishesDiv.appendChild(wishDiv);
-}
-
-function deleteWish(key) {
-    // Here you can keep your prompt for the secret code
-    var secretCode = "duffer"; 
-    var userCode = prompt("Beghairton only chachi has access you can't delete now lol:");
-
-    if (userCode === secretCode) {
-        database.ref('wishes/' + key).remove()
-        .then(function() {
-            console.log("Wish successfully deleted");
-            // Optionally, you can reload wishes here or display a success message
-        })
-        .catch(function(error) {
-            console.log("Ae shurli de kam check karo, too late now you can't delete ", error);
-            // Optionally, display an error message
-        });
-    } else {
-        alert("Ae shurli de kam check karo, too late now you can't delete.");
-    }
-}
-
-function loadWishes() {
-    var wishesDiv = document.getElementById('wishes');
-    database.ref('wishes/').on('value', function(snapshot) {
-        wishesDiv.innerHTML = ''; // Clear existing wishes
-        snapshot.forEach(function(childSnapshot) {
-            var wish = childSnapshot.val().wish;
-            var key = childSnapshot.key;
-            appendWish(wish, key);
-        });
-    });
-}
-
-document.addEventListener('DOMContentLoaded', loadWishes);
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
-    <script>
         window.onload = function() {
             var duration = 7 * 1000;
             var end = Date.now() + duration;
-    
+
             (function frame() {
                 confetti({
                     particleCount: 7,
@@ -256,22 +271,15 @@ document.addEventListener('DOMContentLoaded', loadWishes);
                     spread: 55,
                     origin: { x: 1 }
                 });
-    
+
                 if (Date.now() < end) {
                     requestAnimationFrame(frame);
                 }
             }());
         };
     </script>
-    <script> var firebaseConfig = {
-        databaseURL: "https://birthday-73b01-default-rtdb.firebaseio.com/",
-        // ... other configuration details
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      var database = firebase.database();
-    </script>
-
+</body>
+</html>
 
 
 
