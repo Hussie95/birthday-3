@@ -8,6 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 
     <style>
         body {
@@ -256,7 +257,7 @@
         document.addEventListener('DOMContentLoaded', loadWishes);
 
         window.onload = function() {
-            var duration = 7 * 1000;
+            var duration = 3 * 1000;
             var end = Date.now() + duration;
 
             (function frame() {
