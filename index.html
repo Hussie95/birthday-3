@@ -559,7 +559,7 @@
 
 			function unlockYear1() {
 				var secretCode = "neend"; // Replace with your actual code
-				var userCode = prompt("Enter the unlock code:");
+				var userCode = prompt("Enter the code:");
 
 				if (userCode === secretCode) {
 					var year1Content = document.querySelector(
@@ -568,7 +568,7 @@
 					year1Content.classList.add("unlocked");
 					document.getElementById("unlock-year1-button").style.display = "none";
 				} else {
-					alert("Incorrect code. Please try again.");
+					alert("Please try again.");
 				}
 			}
 
