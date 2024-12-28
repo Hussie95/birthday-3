@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -287,6 +288,206 @@
                 width: 80px;
                 height: 80px;
             }
+
+
+
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        
+        .character-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+           /* Ensures the fox image itself stays fully visible */
+  
+           
+        }
+        .try {
+            background-color: #F7FBDE;
+            border-radius: 50%; /* Makes the background circular */
+            padding: 20px; /* Adds some space around the character */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9); /* Optional: Adds a subtle shadow for depth */
+        }
+
+        .fox {
+            width: clamp(100px, 30vw, 150px);
+            z-index: 2;
+            animation: bounce 0.9s infinite alternate;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            
+        }
+        
+
+        .speech-bubble {
+            position: relative;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: clamp(15px, 4vw, 25px);
+            border: 4px solid #ff7497;
+            font-size: clamp(14px, 4vw, 18px);
+            color: #333;
+            width: clamp(200px, 80vw, 400px);
+            margin-bottom: 20px;
+            z-index: 3;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .speech-bubble.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 15px solid #ffb3c6;
+        }
+
+        .next-button {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: clamp(10px, 2.5vw, 18px) clamp(20px, 5vw, 35px);
+            border-radius: 30px;
+            font-size: clamp(14px, 4vw, 18px);
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255,105,180,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .next-button:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,105,180,0.4);
+            color: #FFB6C1;
+        }
+
+
+        
+
+        .wish-text {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            backdrop-filter: blur(5px);
+        }
+
+
+        
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-12px); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255,105,180,0.4); }
+            100% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 50px rgba(255,105,180,0.7); }
+        }
+
+        @keyframes wishAppear {
+            0% { 
+                opacity: 0;
+                transform: scale(0) rotate(180deg);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes messageAppear {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -30%);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+		
+
+
+        .background-1 {
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255, 182, 193, 0.6) 0%, transparent 70%),
+                radial-gradient(circle at 70% 70%, rgba(255, 105, 180, 0.6) 0%, transparent 70%),
+                linear-gradient(45deg, #FFB6C1, #FF69B4);
+            animation: gradient1 15s ease infinite;
+        }
+
+        .background-2 {
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 192, 203, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 105, 180, 0.8) 0%, transparent 50%),
+                linear-gradient(135deg, #ff99cc, #ff66a3);
+            animation: gradient2 12s ease infinite;
+        }
+
+        .background-3 {
+            background: 
+                linear-gradient(45deg, rgba(255, 182, 193, 0.3) 25%, transparent 25%) -50px 0,
+                linear-gradient(-45deg, rgba(255, 182, 193, 0.3) 25%, transparent 25%) -50px 0,
+                radial-gradient(circle at 50% 50%, rgba(255, 105, 180, 0.5) 0%, transparent 70%),
+                linear-gradient(135deg, #ff99cc, #ff66a3);
+            background-size: 100px 100px, 100px 100px, 100% 100%, 100% 100%;
+            animation: gradient3 20s ease infinite;
+        }
+
+        @keyframes gradient1 {
+            0% { background-position: 0% 50%, 100% 50%, 0% 0%; }
+            50% { background-position: 100% 50%, 0% 50%, 100% 100%; }
+            100% { background-position: 0% 50%, 100% 50%, 0% 0%; }
+        }
+
+        @keyframes gradient2 {
+            0% { background-position: 0% 0%, 100% 100%, 0% 0%; }
+            50% { background-position: 100% 100%, 0% 0%, 50% 50%; }
+            100% { background-position: 0% 0%, 100% 100%, 0% 0%; }
+        }
+
+        @keyframes gradient3 {
+            0% { background-position: -50px 0, -50px 0, 0% 0%, 0% 0%; }
+            50% { background-position: 50px 0, 50px 0, 100% 100%, 100% 100%; }
+            100% { background-position: -50px 0, -50px 0, 0% 0%, 0% 0%; }
+        }
 		</style>
 	</head>
 	<body>
@@ -468,6 +669,18 @@
 					</p>
 				</div>
 			</div>
+		</div>
+		<div class="scene" id="story-scene">
+			<div id="background" class="background background-1"></div>
+			<div class="character-container">
+				<div class="speech-bubble" id="speech-bubble">
+					<p id="speech-text"></p>
+				</div>
+				<div class="try">
+					<img src="images/fox.png" alt="Fox Character" class="fox">
+				</div>
+			</div>
+			<button class="next-button" id="next-button">Next</button>
 		</div>
 
 		<script>
@@ -691,8 +904,265 @@
 			firebase.initializeApp(firebaseConfig);
 			var database = firebase.database();
 		</script>
+		<script>
+			
+        const scenes = [
+            {
+                text: "Oh hey there👋🏻 you made it here!",
+                background: "background-1"
+            },
+            {
+                text: "HAPPY BIRTHDAY!!!!!!!!",
+                background: "background-2"
+            },
+            {
+                text: "HAPPY",
+                background: "background-3"
+            },
+            {
+                text: "Birthday!!!",
+                background: "background-3"
+            },
+
+            {
+                text: "🥳🥳🥳",
+                background: "background-2"
+            },
+            {
+                text: "YOUR BESTIE TOLD ME",
+                background: "background-2"
+            },
+            {
+                text: "YOU JUST TURNED 21 TODAY.",
+                background: "background-2"
+            },
+            {
+                text: "WOAHHHHHH",
+                background: "background-3"
+            },
+            
+            {
+                text: "I AM SO HAPPY FOR YOU",
+                background: "background-3"
+            },
+
+            {
+                text: "Well you might be thinking that we don't even know each other",
+                background: "background-2"
+            },
+            {
+                text: "And that's true 😔",
+                background: "background-1"
+            },
+            {
+                text: "But that does not mean that I CANT WISH YOU!?!",
+                background: "background-2"
+            },
+            {
+                text: "In fact that's exactly why I am here 😔",
+                background: "background-3"
+            },
+
+            {
+                text: "Your dumb friend put me here for this very reason",
+                background: "background-3"
+            },
+            {
+                text: "I told him to place me on the top of the website",
+                background: "background-1"
+            },
+            {
+                text: "He instead",
+                background: "background-2"
+            },
+            {
+                text: "Trapped me inside this circle and I am just bouncing now",
+                background: "background-3"
+            },
+			{
+                text: "THAT TOO AT THE BOTTOM",
+                background: "background-3"
+            },
+			{
+                text: "AT THE VERY END",
+                background: "background-3"
+            },
+			{
+                text: "Idiot",
+                background: "background-3"
+            },
+            {
+                text: "Trust me it sucks in here",
+                background: "background-1"
+            },
+            {
+                text: "The happy smile you see is fake.",
+                background: "background-2"
+            },
+            {
+                text: "ANYWAY",
+                background: "background-3"
+            },
+            {
+                text: "I won't waste much of your time",
+                background: "background-1"
+            },
+            {
+                text: "I have a list of things your friend gave to say!!!",
+                background: "background-2"
+            },
+            {
+                text: "1: Never forget how many people’s lives you’ve touched. You’re a gift to everyone who knows you, and today, we’re celebrating YOU, Happy Birthday!" ,
+                background: "background-3"
+            },
+			{
+                text: "2: On your birthday, I just want you to know. You’re loved, you’re appreciated, and you make everything so much better just by being there.",
+                background: "background-3"
+            },
+			{
+                text: "3: You’re not just another year older—you’re another year better, wiser, stronger, and even more amazing (if that’s even possible).",
+                background: "background-3"
+            },
+			{
+                text: "4: Your friendship means the world to me. I hope this birthday is as memorable as the countless amazing memories we’ve shared together.",
+                background: "background-3"
+            },
+			{
+                text: "5: If friendship were a gift, you’d be the most precious one of all. I’m so grateful for you and everything that you've done for me.",
+                background: "background-3"
+            },
+			{
+                text: "6: You deserve the best, not just today, but every single day. Cause someone as amazing as you deserves nothing less.",
+                background: "background-3"
+            },
+			{
+                text: "7: You’re a gift to everyone who knows you. Thank you for being a constant source of support, strength, and inspiration.",
+                background: "background-3"
+            },
+			{
+                text: "8: Thank you for being you. Thank you for your love, your care, and your endless support.",
+                background: "background-3"
+            },
+			{
+                text: "9: If I could gift you something, it would be the ability to see yourself through my eyes, cause then you’d know how truly special and amazing you are.",
+                background: "background-3"
+            },
+
+			{
+                text: "10: Happy Birthday bestie!. I hope this year brings you endless love, happiness, and all the dreams you’ve been wishing for. Love you 🤍🤍🤍",
+                background: "background-3"
+            },
+
+			{
+                text: "I hope you loved it!!! but wait",
+                background: "background-3"
+            },
+			{
+                text: "That's not it",
+                background: "background-3"
+            },
+			{
+                text: "My friend molang will share the rest of your gift!!!",
+                background: "background-3"
+            },
+			{
+                text: "And i can't wait for you to see it!",
+                background: "background-3"
+            },
+			{
+                text: "Just click next and I'll take you there!",
+                background: "background-3"
+            },
+			{
+                text: "Oh and HAPPY BIRTHDAY!",
+                background: "background-3"
+            },
+        ];
+		const speechBubble = document.getElementById('speech-bubble');
+        const speechText = document.getElementById('speech-text');
+        const nextButton = document.getElementById('next-button');
+        const storyScene = document.getElementById('story-scene');
+        const wishingTree = document.getElementById('wishing-tree');
+        const finalMessage = document.getElementById('final-message');
+        const background = document.getElementById('background');
+
+        let currentScene = 0;
+        let isTyping = false;
+
+        function typeText(text) {
+            return new Promise(resolve => {
+                let index = 0;
+                isTyping = true;
+                speechText.textContent = '';
+                
+                function type() {
+                    if (index < text.length) {
+                        speechText.textContent += text[index];
+                        index++;
+                        setTimeout(type, 73);
+                    } else {
+                        isTyping = false;
+                        resolve();
+                    }
+                }
+                
+                type();
+            });
+        }
+
+        async function nextScene() {
+    if (isTyping) return;
+    
+    if (currentScene < scenes.length - 1) {
+        speechBubble.classList.remove('visible');
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        background.className = `background ${scenes[currentScene].background}`;
+        speechBubble.classList.add('visible');
+        await typeText(scenes[currentScene].text);
+        
+        currentScene++;
+    } else if (currentScene === scenes.length - 1) {
+
+        speechBubble.classList.remove('visible');
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        background.className = `background ${scenes[currentScene].background}`;
+        speechBubble.classList.add('visible');
+        await typeText(scenes[currentScene].text);
+        
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        
+        window.location.href = 'www.google.com';
+        
+        currentScene++;
+    }
+}
+
+        nextButton.addEventListener('click', nextScene);
+
+        window.onload = () => {
+            speechBubble.classList.add('visible');
+            nextScene();
+        };
+
+		</script>
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
